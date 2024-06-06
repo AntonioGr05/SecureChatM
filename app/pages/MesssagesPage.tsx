@@ -98,7 +98,7 @@ const Messages = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
         setCurrentUser(user);
-        });
+    });
 
         return () => unsubscribe();
     }, []);
@@ -122,17 +122,17 @@ const Messages = () => {
                         <TouchableOpacity onPress={() => {
                             // Aquí va el código que se ejecutará cuando se presione el botón
                         }}>
-                            <MaterialIcons name="settings" size={40} color="white" />
+                            <MaterialIcons name="logout" size={30} color="#c0c0c0" />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.searchContainer} className=' mx-auto'>
                     <TextInput 
                         style={styles.searchInput} 
-                        className=' w-11/12 text-xl text-black'
+                        className=' w-11/12 text-xl'
                         placeholder="Buscar mensajes" 
                     />
-                    <MaterialIcons name="search" size={24} color="black" style={styles.searchIcon} />
+                    <MaterialIcons name="search" size={24} color="white" style={styles.searchIcon} />
                 </View>
             </View>
             <KeyboardAvoidingView 
@@ -284,16 +284,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '95%',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#545454',
         borderRadius: 25,
         padding: 10,
         height: 45,
         marginTop: 0,
+        color: 'white',
     },
     searchInput: {
         flex: 1,
         marginLeft: 10,
-        paddingLeft: 35, // Añade un padding a la izquierda para evitar que el texto se superponga con el icono
+        paddingLeft: 35,
+        color: 'white' // Añade un padding a la izquierda para evitar que el texto se superponga con el icono
     },
     searchIcon: {
         position: 'absolute',

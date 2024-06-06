@@ -67,9 +67,9 @@ function MyStack() {
                 />
                 <homestacknav.Screen 
                     name="Stack" 
-                    component={StackPage} 
+                    component={SettingsPage} 
                     options={{
-                        headerBackTitleVisible: false,
+                        headerBackTitleVisible: true,
                         headerTitle: "Stack Page",
                     }}  
                 />
@@ -91,8 +91,9 @@ function MyTabs() {
         <Tab.Navigator 
             initialRouteName="Mensajes"
             screenOptions={{
-                tabBarActiveTintColor: "purple",
+                tabBarActiveTintColor: "white",
                 headerShadowVisible: false,
+                tabBarStyle: { backgroundColor: "#2E2E2E" },
             }}
         >
         <Tab.Screen 

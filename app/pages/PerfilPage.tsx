@@ -3,9 +3,30 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+import { auth } from '../firebase'
+import { User } from 'firebase/auth';
+import { signOut} from 'firebase/auth';
+import { useEffect, useState } from 'react';
+
 const PerfilPage = () => {
 
     const navigation = useNavigation();
+
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+    const logout = async () => {
+        const response = await signOut(auth)
+        navigation.navigate("Login")
+        console.log(response);
+    }
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+        setCurrentUser(user);
+    });
+
+        return () => unsubscribe();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -17,11 +38,13 @@ const PerfilPage = () => {
                 </TouchableOpacity>
                 <View style={styles.headerImage}>
                     <Image 
-                        source={{uri: 'https://randomuser.me/api/portraits/lego/1.jpg'}} 
+                        source={{uri: currentUser?.photoURL || 'https://randomuser.me/api/portraits/lego/6.jpg'}}
                         style={styles.roundImage} 
                     />
                 </View>
-                <Text style={styles.username} className=' text-white text-2xl font-semibold'>Antonio Galvan Rojas</Text>
+                <Text style={styles.username} className=' text-white text-2xl font-semibold'>
+                    {currentUser?.displayName || currentUser?.email || 'Usuario desconocido'}
+                </Text>
             </View>
             <View style={styles.textDescripcion}>
                 <Text className='text-white ml-2 text-xl font-semibold'>Descripción</Text>
@@ -45,7 +68,7 @@ const PerfilPage = () => {
             <TouchableOpacity style={styles.logoutButton} onPress={() => {
                 // Aquí va el código que se ejecutará cuando se presione el botón de logout
             }}>
-                <Text className='text-xl font-semibold' style={styles.logoutText}>Logout</Text>
+                <Text className='text-xl font-semibold' style={styles.logoutText} onPress={logout}>Logout</Text>
             </TouchableOpacity>
         </View>
     );
@@ -154,7 +177,7 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
         padding: 10,
         width: 100,
-        marginTop: 50,
+        marginTop: 20,
         borderRadius: 10,
     },
     logoutText: {
